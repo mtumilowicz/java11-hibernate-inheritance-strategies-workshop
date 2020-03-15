@@ -1,5 +1,7 @@
-package com.example.workshop;
+package app;
 
+import app.mappedsuperclass.Tag;
+import app.mappedsuperclass.TagRepository;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,13 +15,9 @@ public class Java11HibernateInheritanceStrategiesWorkshopApplication {
     }
 
     @Bean
-    public ApplicationRunner demoData(MyEmployeeRepository repo) {
+    public ApplicationRunner demoData(TagRepository repo) {
         return args -> {
-            var p1 = new MyEmployee();
-            p1.setPersonId(1);
-            p1.setName("name1");
-            p1.setCompany("company1");
-            repo.save(p1);
+                    repo.save(Tag.builder().name("tag1").build());
         };
     }
 
