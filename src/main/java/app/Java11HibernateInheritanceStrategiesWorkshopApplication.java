@@ -1,5 +1,9 @@
 package app;
 
+import app.joinedtable.Pet;
+import app.joinedtable.PetRepository;
+import app.joinedtable.Wild;
+import app.joinedtable.WildRepository;
 import app.mappedsuperclass.Tag;
 import app.mappedsuperclass.TagRepository;
 import app.singletable.Circle;
@@ -21,7 +25,9 @@ public class Java11HibernateInheritanceStrategiesWorkshopApplication {
     @Bean
     public ApplicationRunner demoData(TagRepository tagRepository,
                                       RectangleRepository rectangleRepository,
-                                      CircleRepository circleRepository) {
+                                      CircleRepository circleRepository,
+                                      PetRepository petRepository,
+                                      WildRepository wildRepository) {
         return args -> {
             tagRepository.save(Tag.builder().name("tag1").build());
 
@@ -33,6 +39,14 @@ public class Java11HibernateInheritanceStrategiesWorkshopApplication {
             rectangle.setLength(10);
             rectangle.setWidth(30);
             rectangleRepository.save(rectangle);
+
+            Pet pet = new Pet();
+            pet.setName("pet");
+            petRepository.save(pet);
+
+            Wild wild = new Wild();
+            wild.setEndangered(true);
+            wildRepository.save(wild);
         };
     }
 
