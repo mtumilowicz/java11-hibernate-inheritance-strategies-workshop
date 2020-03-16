@@ -10,6 +10,10 @@ import app.singletable.Circle;
 import app.singletable.CircleRepository;
 import app.singletable.Rectangle;
 import app.singletable.RectangleRepository;
+import app.tableperclass.Employee;
+import app.tableperclass.EmployeeRepository;
+import app.tableperclass.Employer;
+import app.tableperclass.EmployerRepository;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -27,7 +31,9 @@ public class Java11HibernateInheritanceStrategiesWorkshopApplication {
                                       RectangleRepository rectangleRepository,
                                       CircleRepository circleRepository,
                                       PetRepository petRepository,
-                                      WildRepository wildRepository) {
+                                      WildRepository wildRepository,
+                                      EmployeeRepository employeeRepository,
+                                      EmployerRepository employerRepository) {
         return args -> {
             tagRepository.save(Tag.builder().name("tag1").build());
 
@@ -47,6 +53,14 @@ public class Java11HibernateInheritanceStrategiesWorkshopApplication {
             Wild wild = new Wild();
             wild.setEndangered(true);
             wildRepository.save(wild);
+
+            Employee employee = new Employee();
+            employee.setSalary(1000);
+            employeeRepository.save(employee);
+
+            Employer employer = new Employer();
+            employer.setBudget(1_000_000);
+            employerRepository.save(employer);
         };
     }
 
