@@ -10,5 +10,4 @@ public class Shape {
     @Id
     @GeneratedValue
     private Long id;
-
 }

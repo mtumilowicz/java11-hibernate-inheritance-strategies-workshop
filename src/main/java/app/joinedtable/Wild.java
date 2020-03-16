@@ -9,5 +9,6 @@ import javax.persistence.Entity;
 @Getter
 @Setter
 public class Wild extends Animal {
+
     private boolean endangered;
 }

@@ -9,5 +9,6 @@ import javax.persistence.Entity;
 @Getter
 @Setter
 public class Tag extends BaseEntity {
+
     private String name;
 }

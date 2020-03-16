@@ -9,5 +9,6 @@ import javax.persistence.Entity;
 @Getter
 @Setter
 public class Pet extends Animal {
+
     private String name;
 }
