@@ -11,39 +11,39 @@ class AnimalServiceTest extends Specification {
     AnimalService animalService
 
     def setup() {
-        createPets()
-        createWilds()
+        savePets()
+        saveWilds()
     }
 
     def cleanup() {
         animalService.deleteAll()
     }
 
-    def createPets() {
+    def savePets() {
         def pet = new Pet()
         pet.name = 'test pet'
-        animalService.create(pet)
+        animalService.save(pet)
     }
 
-    def createWilds() {
+    def saveWilds() {
         def wild = new Wild()
         wild.endangered = true
 
-        animalService.create(wild)
+        animalService.save(wild)
     }
 
-    def "GetPets"() {
+    def "findAllPets"() {
         expect:
-        animalService.getPets().name == ['test pet']
+        animalService.findAllPets().name == ['test pet']
     }
 
-    def "GetWilds"() {
+    def "findAllWilds"() {
         expect:
-        animalService.getWilds().endangered == [true]
+        animalService.findAllWilds().endangered == [true]
     }
 
-    def "GetAll"() {
+    def "findAll"() {
         expect:
-        animalService.getAll().size() == 2
+        animalService.findAll().size() == 2
     }
 }

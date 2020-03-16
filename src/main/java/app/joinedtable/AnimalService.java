@@ -17,19 +17,19 @@ public class AnimalService {
     @Autowired
 	AnimalRepository animalRepository;
 
-    public Animal create(Animal animal) {
+    public Animal save(Animal animal) {
 		return animalRepository.save(animal);
 	}
 
-    public List<Pet> getPets() {
+    public List<Pet> findAllPets() {
         return petRepository.findAll();
     }
 
-    public List<Wild> getWilds() {
+    public List<Wild> findAllWilds() {
         return wildRepository.findAll();
     }
 
-    public List<Animal> getAll() {
+    public List<Animal> findAll() {
         return animalRepository.findAll();
     }
 
