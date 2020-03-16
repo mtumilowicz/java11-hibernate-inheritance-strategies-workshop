@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 @Entity
 @Getter
 @Setter
-public class Employer extends Person {
-    int budget;
+class Employer extends Person {
+
+    private int budget;
 }

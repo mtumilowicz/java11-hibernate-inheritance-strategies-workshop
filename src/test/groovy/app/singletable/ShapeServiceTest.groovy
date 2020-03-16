@@ -32,12 +32,12 @@ class ShapeServiceTest extends Specification {
         shapeService.deleteAll()
     }
 
-    def "FindAllCircles"() {
+    def 'findAllCircles'() {
         expect:
         shapeService.findAllCircles().radius == [15]
     }
 
-    def "FindAllRectangles"() {
+    def 'findAllRectangles'() {
         given:
         def rectangles = shapeService.findAllRectangles()
 
@@ -46,7 +46,7 @@ class ShapeServiceTest extends Specification {
         rectangles.width == [25]
     }
 
-    def "FindAll"() {
+    def 'findAll'() {
         expect:
         shapeService.findAll().size() == 2
     }

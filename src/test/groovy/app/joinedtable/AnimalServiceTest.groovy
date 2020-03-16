@@ -32,17 +32,17 @@ class AnimalServiceTest extends Specification {
         animalService.save(wild)
     }
 
-    def "findAllPets"() {
+    def 'findAllPets'() {
         expect:
         animalService.findAllPets().name == ['test pet']
     }
 
-    def "findAllWilds"() {
+    def 'findAllWilds'() {
         expect:
         animalService.findAllWilds().endangered == [true]
     }
 
-    def "findAll"() {
+    def 'findAll'() {
         expect:
         animalService.findAll().size() == 2
     }

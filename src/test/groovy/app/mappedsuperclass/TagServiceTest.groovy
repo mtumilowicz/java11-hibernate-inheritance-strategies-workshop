@@ -24,7 +24,7 @@ class TagServiceTest extends Specification {
         tagService.deleteAll()
     }
 
-    def "findAll"() {
+    def 'findAll'() {
         tagService.findAll().name == ['test tag']
     }
 }

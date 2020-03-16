@@ -9,11 +9,9 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class Person {
+class Person {
 
     @Id
     @GeneratedValue
-    private Long id;
-
-
+    Long id;
 }
