@@ -9,7 +9,7 @@ import javax.persistence.Version;
 
 @MappedSuperclass
 @Getter
-public class BaseEntity {
+class BaseEntity {
 
     @Id
     @GeneratedValue
