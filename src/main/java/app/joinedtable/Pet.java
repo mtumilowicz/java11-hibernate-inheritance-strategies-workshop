@@ -1,7 +1,6 @@
 package app.joinedtable;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Entity;
 
