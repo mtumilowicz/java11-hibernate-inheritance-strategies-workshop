@@ -17,6 +17,9 @@ public class SingleTableController {
 	
 	@Autowired
 	RectangleRepository rectangleRepository;
+
+	@Autowired
+	ShapeRepository shapeRepository;
 	
 	@GetMapping
 	public Object get() {
@@ -25,5 +28,6 @@ public class SingleTableController {
 		shapes.addAll(rectangleRepository.findAll());
 
 		return shapes;
+//		return shapeRepository.findAll();
 	}
 }
