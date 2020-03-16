@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 class Animal {
+
     @Id
     @GeneratedValue
     long id;

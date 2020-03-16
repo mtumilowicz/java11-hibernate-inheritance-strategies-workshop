@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class AnimalService {
+class AnimalService {
 
     @Autowired
     PetRepository petRepository;
@@ -15,25 +15,25 @@ public class AnimalService {
     WildRepository wildRepository;
 
     @Autowired
-	AnimalRepository animalRepository;
+    AnimalRepository animalRepository;
 
-    public Animal save(Animal animal) {
-		return animalRepository.save(animal);
-	}
+    Animal save(Animal animal) {
+        return animalRepository.save(animal);
+    }
 
-    public List<Pet> findAllPets() {
+    List<Pet> findAllPets() {
         return petRepository.findAll();
     }
 
-    public List<Wild> findAllWilds() {
+    List<Wild> findAllWilds() {
         return wildRepository.findAll();
     }
 
-    public List<Animal> findAll() {
+    List<Animal> findAll() {
         return animalRepository.findAll();
     }
 
-    public void deleteAll() {
+    void deleteAll() {
         animalRepository.deleteAll();
     }
 }

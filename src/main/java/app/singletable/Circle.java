@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 @DiscriminatorValue(value = "Circle")
 @Getter
 @Setter
-public class Circle extends Shape {
+class Circle extends Shape {
 
     private double radius;
 }

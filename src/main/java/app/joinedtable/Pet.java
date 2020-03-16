@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 @Entity
 @Getter
 @Setter
-public class Pet extends Animal {
+class Pet extends Animal {
 
     private String name;
 }
