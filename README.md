@@ -318,16 +318,109 @@ hierarchy
 ### example
 * entities
 ```
+@Entity
+@Getter
+@Setter
+class Employee extends Person {
+
+    private int salary;
+}
+
+@Entity
+@Getter
+@Setter
+class Employer extends Person {
+
+    private int budget;
+}
+
+@Entity
+@Getter
+@Setter
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+class Person {
+
+    @Id
+    @GeneratedValue
+    Long id;
+}
 ```
 * database (tables)
 ```
-Name: SHAPE
-Columns: TYPE | ID | RADIUS | LENGTH | WIDTH
+Name: PERSON
+Columns: ID
+
+Name: EMPLOYER
+Columns: ID | BUDGET
+
+Name: EMPLOYEE
+Columns: ID | SALARY
 ```
 * queries
-    * create
-```
-```
-    * find
-```
-```
+    * create employer
+        ```
+        insert 
+        into
+            employer
+            (budget, id) 
+        values
+            (?, ?)
+        ```
+    * create employee
+        ```
+        insert 
+            into
+                employee
+                (salary, id) 
+            values
+                (?, ?)
+        ```
+    * find all employees
+        ```
+        select
+            id as id1_3_,
+            salary as salary1_1_ 
+        from
+            employee
+        ```
+    * find all employers
+        ```
+        select
+            id,
+            budget
+        from
+            employer
+        ```
+    * find all persons
+        ```
+        select
+                id,
+                salary,
+                budget,
+                clazz_ 
+            from
+                ( select
+                    id,
+                    null as salary,
+                    null as budget,
+                    0 as clazz_ 
+                from
+                    person 
+                union all 
+                select
+                    id,
+                    salary,
+                    null as budget,
+                    1 as clazz_ 
+                from
+                    employee 
+                union all 
+                select
+                    id,
+                    null as salary,
+                    budget,
+                    2 as clazz_ 
+                from
+                    employer 
+            )
+        ```
