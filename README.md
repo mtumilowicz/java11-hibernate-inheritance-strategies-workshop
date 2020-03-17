@@ -12,13 +12,48 @@
         * joined table
         * table per class
         * mapped superclass
+    * note that this project is as simple as it could be, proper approach (hexagonal) is discussed here
+    https://github.com/mtumilowicz/java13-spring-crud-http-methods-workshop
 
 ## MappedSuperclass
-* is implemented in the domain model only without reflecting it in the database schema
-* inheritance is visible in the domain model only, and each database 
-table contains both the base class and the subclass properties
-* is not mirrored at the database level, so it’s not  possible to use polymorphic queries (fetching 
+* is implemented in the domain model - without reflecting it in the database schema
+* inheritance is visible in the domain model only, and each database table contains 
+both the base class and the subclass properties
+* is not mirrored at the database level, so it’s not possible to use polymorphic queries (fetching 
 subclasses by their base class)
+
+### example
+* mapped superclass
+    ```
+    @MappedSuperclass
+    @Getter
+    class BaseEntity {
+    
+        @Id
+        @GeneratedValue
+        Long id;
+    
+        @Version
+        Integer version;
+    }
+    ```
+* entity
+    ```
+    @Entity
+    @Getter
+    @Setter
+    class Tag extends BaseEntity {
+    
+        private String name;
+    }
+    ```
+* database (tables)
+    ```
+    Name: TAG
+    Columns: ID | VERSION | NAME  
+    ```
+* queries
+    * find all
 
 ## Single table
 * the domain model class hierarchy is materialized into a single table which contains entities 
