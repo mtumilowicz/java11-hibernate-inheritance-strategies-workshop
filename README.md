@@ -133,6 +133,8 @@ TRIGGER constraints
 * queries
     * create circle
         ```
+        shapeRepository.save(...)
+      
         insert 
         into
             shape
@@ -142,6 +144,8 @@ TRIGGER constraints
         ```
     * create rectangle
         ```
+        shapeRepository.save(...)
+      
         insert 
         into
             shape
@@ -151,6 +155,8 @@ TRIGGER constraints
         ```
     * find all circles
         ```
+        circleRepository.findAll()
+      
         select
             id,
             radius 
@@ -161,6 +167,8 @@ TRIGGER constraints
         ```
     * find all rectangles
         ```
+        rectangleRepository.findAll()
+      
         select
             id,
             length,
@@ -172,6 +180,8 @@ TRIGGER constraints
         ```
     * find all shapes
         ```
+        shapeRepository.findAll()
+      
         select
             id,
             radius,
@@ -235,6 +245,8 @@ to fetch every associated subclass instance
 * queries
     * create pet
         ```
+        animalRepository.save(...)
+      
         insert 
             into
                 animal
@@ -251,6 +263,8 @@ to fetch every associated subclass instance
         ```
     * create wild
         ```
+        animalRepository.save(...)
+      
         insert 
             into
                 animal
@@ -267,6 +281,8 @@ to fetch every associated subclass instance
         ```
     * find all pets
         ```
+        petRepository.findAll()
+      
         select
                 id,
                 name 
@@ -278,6 +294,8 @@ to fetch every associated subclass instance
         ```
     * find all wilds
         ```
+        wildRepository.findAll()
+      
         select
                 id,
                 endangered
@@ -290,6 +308,8 @@ to fetch every associated subclass instance
         ```
     * find all animals
         ```
+        animalRepository.findAll()
+      
         select
                 animal.id as id1_0_,
                 pet.name as name1_4_,
@@ -317,48 +337,50 @@ hierarchy
 
 ### example
 * entities
-```
-@Entity
-@Getter
-@Setter
-class Employee extends Person {
-
-    private int salary;
-}
-
-@Entity
-@Getter
-@Setter
-class Employer extends Person {
-
-    private int budget;
-}
-
-@Entity
-@Getter
-@Setter
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-class Person {
-
-    @Id
-    @GeneratedValue
-    Long id;
-}
-```
+    ```
+    @Entity
+    @Getter
+    @Setter
+    class Employee extends Person {
+    
+        private int salary;
+    }
+    
+    @Entity
+    @Getter
+    @Setter
+    class Employer extends Person {
+    
+        private int budget;
+    }
+    
+    @Entity
+    @Getter
+    @Setter
+    @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+    class Person {
+    
+        @Id
+        @GeneratedValue
+        Long id;
+    }
+    ```
 * database (tables)
-```
-Name: PERSON
-Columns: ID
-
-Name: EMPLOYER
-Columns: ID | BUDGET
-
-Name: EMPLOYEE
-Columns: ID | SALARY
-```
+    ```
+    Name: PERSON
+    Columns: ID
+    
+    Name: EMPLOYER
+    Columns: ID | BUDGET
+    
+    Name: EMPLOYEE
+    Columns: ID | SALARY
+    ```
 * queries
     * create employer
         ```
+        employerRepository.save(...)
+        
         insert 
         into
             employer
@@ -368,6 +390,8 @@ Columns: ID | SALARY
         ```
     * create employee
         ```
+        employeeRepository.save(...)
+        
         insert 
             into
                 employee
@@ -377,6 +401,8 @@ Columns: ID | SALARY
         ```
     * find all employees
         ```
+        employeeRepository.findAll()
+      
         select
             id as id1_3_,
             salary as salary1_1_ 
@@ -385,6 +411,8 @@ Columns: ID | SALARY
         ```
     * find all employers
         ```
+        employerRepository.findAll()
+        
         select
             id,
             budget
@@ -393,6 +421,8 @@ Columns: ID | SALARY
         ```
     * find all persons
         ```
+        personRepository.findAll()
+        
         select
                 id,
                 salary,
