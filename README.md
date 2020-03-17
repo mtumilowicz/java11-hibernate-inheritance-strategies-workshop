@@ -125,7 +125,63 @@ TRIGGER constraints
         private Long id;
     }
     ```
-
+* database (tables)
+    ```
+    Name: SHAPE
+    Columns: TYPE | ID | RADIUS | LENGTH | WIDTH
+    ```
+* queries
+    * create circle
+        ```
+        insert 
+        into
+            shape
+            (radius, type, id) 
+        values
+            (?, 'Circle', ?)
+        ```
+    * create rectangle
+        ```
+        insert 
+        into
+            shape
+            (length, width, type, id) 
+        values
+            (?, ?, 'Rectangle', ?)
+        ```
+    * find all circles
+        ```
+        select
+            id,
+            radius 
+        from
+            shape 
+        where
+            type='Circle'
+        ```
+    * find all rectangles
+        ```
+        select
+            id,
+            length,
+            width 
+        from
+            shape 
+        where
+            type='Rectangle'
+        ```
+    * find all shapes
+        ```
+        select
+            id
+            radius
+            length
+            width 
+            type
+        from
+            shape
+        ```
+      
 ## Joined table
 * the base class and all the subclasses have their own database tables and fetching a subclass 
 entity requires a join with the parent table as well
