@@ -53,7 +53,28 @@ subclasses by their base class)
     Columns: ID | VERSION | NAME  
     ```
 * queries
-    * find all
+    * create tag
+        ```
+        tagRepository.save(...)
+      
+        insert 
+        into
+            tag
+            (version, name, id) 
+        values
+            (?, ?, ?)
+        ```
+    * find all tags
+        ```
+        tagRepository.findAll()
+      
+        select
+            id
+            version
+            name
+        from
+            tag
+        ```
 
 ## Single table
 * the domain model class hierarchy is materialized into a single table which contains entities 
@@ -70,6 +91,40 @@ access to one table only
 * because all subclass columns are stored in a single table, it’s not possible to use NOT NULL constraints 
 anymore, so integrity checks must be moved either into the data access layer or enforced through CHECK or 
 TRIGGER constraints
+
+### example
+* entities
+    ```
+    @Entity
+    @DiscriminatorValue(value = "Circle")
+    @Getter
+    @Setter
+    class Circle extends Shape {
+    
+        private double radius;
+    }
+    
+    @Entity
+    @DiscriminatorValue(value = "Rectangle")
+    @Getter
+    @Setter
+    class Rectangle extends Shape {
+    
+        private double width;
+    
+        private double length;
+    }
+    
+    @Entity
+    @DiscriminatorColumn(name = "type")
+    @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+    class Shape {
+    
+        @Id
+        @GeneratedValue
+        private Long id;
+    }
+    ```
 
 ## Joined table
 * the base class and all the subclasses have their own database tables and fetching a subclass 
