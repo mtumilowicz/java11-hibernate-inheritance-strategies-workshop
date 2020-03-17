@@ -173,10 +173,10 @@ TRIGGER constraints
     * find all shapes
         ```
         select
-            id
-            radius
-            length
-            width 
+            id,
+            radius,
+            length,
+            width,
             type
         from
             shape
@@ -191,8 +191,143 @@ entity requires a join with the parent table as well
 to fetch every associated subclass instance
 * polymorphic queries can use several JOINS which might affect performance when fetching a large number of entities
 
+### example
+* entities
+    ```
+    @Entity
+    @Inheritance(strategy = InheritanceType.JOINED)
+    @Getter
+    @Setter
+    class Animal {
+    
+        @Id
+        @GeneratedValue
+        long id;
+    }
+    
+    @Entity
+    @Getter
+    @Setter
+    class Pet extends Animal {
+    
+        private String name;
+    }
+    
+    @Entity
+    @Getter
+    @Setter
+    class Wild extends Animal {
+    
+        private boolean endangered;
+    }
+    ```
+* database (tables)
+    ```
+    Name: ANIMAL
+    Columns: ID
+    
+    Name: PET
+    Columns: NAME, ID
+    
+    Name: WILD
+    Columns: ENDANGERED | ID
+    ```
+* queries
+    * create pet
+        ```
+        insert 
+            into
+                animal
+                (id) 
+            values
+                (?)
+        
+        insert 
+            into
+                pet
+                (name, id) 
+            values
+                (?, ?)
+        ```
+    * create wild
+        ```
+        insert 
+            into
+                animal
+                (id) 
+            values
+                (?)
+        
+        insert 
+            into
+                wild
+                (endangered, id) 
+            values
+                (?, ?)
+        ```
+    * find all pets
+        ```
+        select
+                id,
+                name 
+            from
+                pet 
+            inner join
+                animal
+                    on pet.id=animal.id
+        ```
+    * find all wilds
+        ```
+        select
+                id,
+                endangered
+            from
+                wild 
+            inner join
+                animal
+                    on wild.id=animal.id
+        
+        ```
+    * find all animals
+        ```
+        select
+                animal.id as id1_0_,
+                pet.name as name1_4_,
+                wild.endangered as endanger1_7_,
+                case 
+                    when pet.id is not null then 1 
+                    when wild.id is not null then 2 
+                    when animal.id is not null then 0 
+                end as clazz_ 
+            from
+                animal 
+            left outer join
+                pet 
+                    on animal.id=pet.id 
+            left outer join
+                wild 
+                    on animal.id=wild.id
+        ```
 ## Table per class
 * each subclass has its own table containing both the subclass and the base class properties
 * each table defines all persistent states of the class, including the inherited 
 * when using polymorphic queries, a UNION is required to fetch the base class table along with all subclass tables
-* polymorphic queries require multiple UNION queries, so be aware of the performance implications of a large class hierarchy
+* polymorphic queries require multiple UNION queries, so be aware of the performance implications of a large class 
+hierarchy
+
+### example
+* entities
+```
+```
+* database (tables)
+```
+Name: SHAPE
+Columns: TYPE | ID | RADIUS | LENGTH | WIDTH
+```
+* queries
+    * create
+```
+```
+    * find
+```
+```
