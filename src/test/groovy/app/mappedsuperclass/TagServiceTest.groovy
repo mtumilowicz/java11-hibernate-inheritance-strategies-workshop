@@ -17,7 +17,7 @@ class TagServiceTest extends Specification {
     def saveTags() {
         def tag = new Tag()
         tag.name = 'test tag'
-        tagService.save()
+        tagService.save(tag)
     }
 
     def cleanup() {
@@ -25,6 +25,7 @@ class TagServiceTest extends Specification {
     }
 
     def 'findAll'() {
+        expect:
         tagService.findAll().name == ['test tag']
     }
 }
