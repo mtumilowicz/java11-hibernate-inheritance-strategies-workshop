@@ -7,7 +7,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-@DiscriminatorValue(value = "Circle")
+// discriminator: Circle, hint: @DiscriminatorValue
 @Getter
 @Setter
 class Circle extends Shape {

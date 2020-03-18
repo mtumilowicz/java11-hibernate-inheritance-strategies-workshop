@@ -7,7 +7,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-@DiscriminatorValue(value = "Rectangle")
+// discriminator: Rectangle, hint: @DiscriminatorValue
 @Getter
 @Setter
 class Rectangle extends Shape {

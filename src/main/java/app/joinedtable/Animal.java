@@ -6,7 +6,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+// hint: Inheritance, strategy: JOINED
 @Getter
 @Setter
 class Animal {

@@ -3,8 +3,8 @@ package app.singletable;
 import javax.persistence.*;
 
 @Entity
-@DiscriminatorColumn(name = "type")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+// discriminator column: type, hint: @DiscriminatorColumn
+// inheritance: SINGLE_TABLE
 class Shape {
 
     @Id

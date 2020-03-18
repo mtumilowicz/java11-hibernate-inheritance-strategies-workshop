@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+// inheritance: TABLE_PER_CLASS
 class Person {
 
     @Id
