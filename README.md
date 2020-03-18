@@ -12,15 +12,25 @@
         * joined table
         * table per class
         * mapped superclass
-    * note that this project is as simple as it could be, proper approach (hexagonal) is discussed here
-    https://github.com/mtumilowicz/java13-spring-crud-http-methods-workshop
+    * note that this project is as simple as it could be and focused only on persistence layer, cross-cutting proper 
+    approach (hexagonal) will be discussed elsewhere
 
+## key annotations
+* `@Inheritance`
+    * default: `InheritanceType.SINGLE_TABLE`
+    * specifies the inheritance strategy to be used for an entity class hierarchy
+    * it is specified on the entity class that is the root of the entity class hierarchy
+        
 ## MappedSuperclass
 * is implemented in the domain model - without reflecting it in the database schema
 * inheritance is visible in the domain model only, and each database table contains 
 both the base class and the subclass properties
 * is not mirrored at the database level, so it’s not possible to use polymorphic queries (fetching 
 subclasses by their base class)
+* key annotations
+    * `@MappedSuperclass`
+        * designates a class whose mapping information is applied to the entities that inherit from it
+        * a mapped superclass has no separate table defined for it
 
 ### example
 * mapped superclass
@@ -76,12 +86,13 @@ subclasses by their base class)
             tag
         ```
 
-## Single table
+## single table
 * the domain model class hierarchy is materialized into a single table which contains entities 
 belonging to different class types
 * maps all subclasses to only one database table
 * each subclass declares its own persistent properties
-* is used by JPA by default when omitting an explicit inheritance strategy (e.g. `@Inheritance`)
+* if the `@Inheritance` annotation is not specified or if no inheritance type is specified for an entity
+class hierarchy, the `SINGLE_TABLE` mapping strategy is used
 * each subclass in a hierarchy must define a unique discriminator value, which is used to differentiate 
 between rows belonging to separate subclass types
 * when using polymorphic queries, only a single table is required to be scanned to fetch all associated 
@@ -91,7 +102,14 @@ access to one table only
 * because all subclass columns are stored in a single table, it’s not possible to use NOT NULL constraints 
 anymore, so integrity checks must be moved either into the data access layer or enforced through CHECK or 
 TRIGGER constraints
-
+* key annotations
+    * `@DiscriminatorColumn(name = "type")`
+        * default name: DTYPE
+        * default type: STRING
+            * STRING, CHAR, INTEGER
+    * `@DiscriminatorValue(value = "Rectangle")`
+        * default: entity name
+        
 ### example
 * entities
     ```
@@ -192,7 +210,7 @@ TRIGGER constraints
             shape
         ```
       
-## Joined table
+## joined table
 * the base class and all the subclasses have their own database tables and fetching a subclass 
 entity requires a join with the parent table as well
 * inherited state is retrieved by joining with the table of the superclass
@@ -200,7 +218,14 @@ entity requires a join with the parent table as well
 * when using polymorphic queries, the base class table must be joined with all subclass tables 
 to fetch every associated subclass instance
 * polymorphic queries can use several JOINS which might affect performance when fetching a large number of entities
-
+* key annotations
+    * `@Inheritance(strategy = InheritanceType.JOINED)`
+    * `@PrimaryKeyJoinColumns` * used to map composite foreign keys
+        * default: columns are assumed to have the same names as the primary key columns of the primary table 
+        of the superclass
+        * `@PrimaryKeyJoinColumn` - specifies a primary key column that is used as a foreign key to join to 
+        another table
+    
 ### example
 * entities
     ```
@@ -248,62 +273,62 @@ to fetch every associated subclass instance
         animalRepository.save(...)
       
         insert 
-            into
-                animal
-                (id) 
-            values
-                (?)
+        into
+            animal
+            (id) 
+        values
+            (?)
         
         insert 
-            into
-                pet
-                (name, id) 
-            values
-                (?, ?)
+        into
+            pet
+            (name, id) 
+        values
+            (?, ?)
         ```
     * create wild
         ```
         animalRepository.save(...)
       
         insert 
-            into
-                animal
-                (id) 
-            values
-                (?)
+        into
+            animal
+            (id) 
+        values
+            (?)
         
         insert 
-            into
-                wild
-                (endangered, id) 
-            values
-                (?, ?)
+        into
+            wild
+            (endangered, id) 
+        values
+            (?, ?)
         ```
     * find all pets
         ```
         petRepository.findAll()
       
         select
-                id,
-                name 
-            from
-                pet 
-            inner join
-                animal
-                    on pet.id=animal.id
+            id,
+            name 
+        from
+            pet 
+        inner join
+            animal
+                on pet.id=animal.id
         ```
     * find all wilds
         ```
         wildRepository.findAll()
       
         select
-                id,
-                endangered
-            from
-                wild 
-            inner join
-                animal
-                    on wild.id=animal.id
+            id,
+            endangered
+        from
+            wild 
+        inner join
+            animal
+                on wild.id=animal.id
         
         ```
     * find all animals
