@@ -336,30 +336,32 @@ to fetch every associated subclass instance
         animalRepository.findAll()
       
         select
-                animal.id as id1_0_,
-                pet.name as name1_4_,
-                wild.endangered as endanger1_7_,
-                case 
-                    when pet.id is not null then 1 
-                    when wild.id is not null then 2 
-                    when animal.id is not null then 0 
-                end as clazz_ 
-            from
-                animal 
-            left outer join
-                pet 
-                    on animal.id=pet.id 
-            left outer join
-                wild 
-                    on animal.id=wild.id
+            animal.id as id1_0_,
+            pet.name as name1_4_,
+            wild.endangered as endanger1_7_,
+            case 
+                when pet.id is not null then 1 
+                when wild.id is not null then 2 
+                when animal.id is not null then 0 
+            end as clazz_ 
+        from
+            animal 
+        left outer join
+            pet 
+                on animal.id=pet.id 
+        left outer join
+            wild 
+                on animal.id=wild.id
         ```
-## Table per class
+## table per class
 * each subclass has its own table containing both the subclass and the base class properties
 * each table defines all persistent states of the class, including the inherited 
 * when using polymorphic queries, a UNION is required to fetch the base class table along with all subclass tables
 * polymorphic queries require multiple UNION queries, so be aware of the performance implications of a large class 
 hierarchy
-
+* key annotations
+    * `@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)`
+    
 ### example
 * entities
     ```
@@ -418,11 +420,11 @@ hierarchy
         employeeRepository.save(...)
         
         insert 
-            into
-                employee
-                (salary, id) 
-            values
-                (?, ?)
+        into
+            employee
+            (salary, id) 
+        values
+            (?, ?)
         ```
     * find all employees
         ```
@@ -449,33 +451,33 @@ hierarchy
         personRepository.findAll()
         
         select
+            id,
+            salary,
+            budget,
+            clazz_ 
+        from
+            ( select
+                id,
+                null as salary,
+                null as budget,
+                0 as clazz_ 
+            from
+                person 
+            union all 
+            select
                 id,
                 salary,
-                budget,
-                clazz_ 
+                null as budget,
+                1 as clazz_ 
             from
-                ( select
-                    id,
-                    null as salary,
-                    null as budget,
-                    0 as clazz_ 
-                from
-                    person 
-                union all 
-                select
-                    id,
-                    salary,
-                    null as budget,
-                    1 as clazz_ 
-                from
-                    employee 
-                union all 
-                select
-                    id,
-                    null as salary,
-                    budget,
-                    2 as clazz_ 
-                from
-                    employer 
-            )
+                employee 
+            union all 
+            select
+                id,
+                null as salary,
+                budget,
+                2 as clazz_ 
+            from
+                employer 
+        )
         ```
