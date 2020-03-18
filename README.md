@@ -14,7 +14,7 @@
         * mapped superclass
     * note that this project is as simple as it could be and focused only on persistence layer, cross-cutting proper 
     approach (hexagonal) will be discussed elsewhere
-* go through entity class, follow hints, then
+* go through all entity classes, follow hints, then
     * run the application and take a look at the database: http://localhost:8080/h2-console
     * run tests and observe sql queries printed to the console
 
