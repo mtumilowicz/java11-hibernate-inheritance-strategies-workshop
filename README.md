@@ -15,7 +15,7 @@
         * joined table
         * table per class
         * mapped superclass
-    * note that this project is as simple as it could be and focused only on persistence layer, cross-cutting proper 
+    * note that this project is as simple as it could be and focused only on persistence layer, proper 
     approach (hexagonal) will be discussed elsewhere
 * go through all entity classes, follow hints, then
     * run the application and take a look at the database: http://localhost:8080/h2-console
