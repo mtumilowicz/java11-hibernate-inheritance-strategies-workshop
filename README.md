@@ -226,7 +226,8 @@ to fetch every associated subclass instance
 * polymorphic queries can use several JOINS which might affect performance when fetching a large number of entities
 * key annotations
     * `@Inheritance(strategy = InheritanceType.JOINED)`
-    * `@PrimaryKeyJoinColumns` * used to map composite foreign keys
+    * `@PrimaryKeyJoinColumns` 
+        * used to map composite foreign keys
         * default: columns are assumed to have the same names as the primary key columns of the primary table 
         of the superclass
         * `@PrimaryKeyJoinColumn` - specifies a primary key column that is used as a foreign key to join to 
