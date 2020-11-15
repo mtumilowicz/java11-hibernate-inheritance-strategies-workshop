@@ -272,7 +272,7 @@ to fetch every associated subclass instance
     Columns: NAME, ID
     
     Name: WILD
-    Columns: ENDANGERED | ID
+    Columns: ENDANGERED, ID
     ```
 * queries
     * create pet
